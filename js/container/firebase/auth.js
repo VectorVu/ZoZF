@@ -1,7 +1,7 @@
 import * as _noti from "../../common/notify.js";
 
 const config = {
-    url: "http://127.0.0.1:5500/index.html",
+    url: "https://vectorvu.github.io/ZoZF/",
     handleCodeApp: true
 };
 
@@ -23,11 +23,19 @@ const createNewAccount = (email, password) => {
 }
 
 const loginAccount = async (email, password) => {
-    const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
-    let user = userCredential.user;
-    localStorage.setItem("emailLogined", user.email);
-    localStorage.setItem("uid", user.uid);
-    return user;
+    try {
+        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+        let user = userCredential.user;
+        localStorage.setItem("emailLogined", user.email);
+        localStorage.setItem("uid", user.uid);
+        return user;
+    } catch (error) {
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        throw error;
+    }
+   
 }
 const getCurrentUser=()=>{
     return firebase.auth().currentUser;

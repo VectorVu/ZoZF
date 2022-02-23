@@ -5,6 +5,7 @@ import RegisterScreen from "../Register/register.js";
 import app from "../../index.js";
 import { loginAccount } from "../firebase/auth.js"
 import MainScreen from "../main/main.js";
+import * as _noti from "../../common/notify.js";
 class LoginScreen {
     $email;
     $password;
@@ -82,9 +83,14 @@ class LoginScreen {
         else this.$password.setError("");
 
         if (!isError) {
-           const userLogin = await loginAccount(email.value, password.value);
-           const mainScreen = new MainScreen();
-           app.changeActiveScreen(mainScreen);
+            try {
+                const userLogin = await loginAccount(email.value, password.value);
+                const mainScreen = new MainScreen();
+                app.changeActiveScreen(mainScreen);
+            } catch (error) {
+                _noti.error(error.code, error.message);
+            }
+           
         }
     }
     render(appEle) {

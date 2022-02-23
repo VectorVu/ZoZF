@@ -1,7 +1,7 @@
 import db from "./firestore.js";
 import * as _noti from "../../common/notify.js";
 
-async function createUser(email, name, phone, imageUrl, likeList, cmtList) {
+async function createUser(email, name, phone, imageUrl, likeList, cmtList,postList) {
     try {
         const response = await db.collection("users").add({
             email,
@@ -9,7 +9,8 @@ async function createUser(email, name, phone, imageUrl, likeList, cmtList) {
             phone,
             imageUrl,
             likeList,
-            cmtList
+            cmtList,
+            postList
         });
         localStorage.removeItem("auth-info");
         localStorage.setItem("auth-info", JSON.stringify({
@@ -18,7 +19,8 @@ async function createUser(email, name, phone, imageUrl, likeList, cmtList) {
             phone,
             imageUrl,
             likeList,
-            cmtList
+            cmtList,
+            postList
         }));
         console.log(response);
 
@@ -51,7 +53,7 @@ async function getUserByEmail(email) {
     }
 }
 
-async function updateUserData( uid, email, name, phone, imageUrl, likeList, cmtList) {
+async function updateUserData( uid, email, name, phone, imageUrl) {
     try {
         const reponse = await db
             .collection("users")
@@ -60,18 +62,14 @@ async function updateUserData( uid, email, name, phone, imageUrl, likeList, cmtL
                 email,
                 name,
                 phone,
-                imageUrl,
-                likeList,
-                cmtList
+                imageUrl
             });
             localStorage.removeItem("auth-info");
             localStorage.setItem("auth-info", JSON.stringify({
                 email,
                 name,
                 phone,
-                imageUrl,
-                likeList,
-                cmtList
+                imageUrl
             }));
     } catch (error) {
         let errorCode = error.code;

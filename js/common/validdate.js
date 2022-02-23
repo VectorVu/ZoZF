@@ -1,9 +1,11 @@
+
 export const checkMail = (email) => {
     if (!email || email.length === 0) return "Email is require!!!";
     const regax = /[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}/igm;
     if (!regax.test(email)) return "Email is invalid!!!";
     return null;
 }
+
 export const checkPassword = (password) => {
     if (!password || password.length === 0) return "Password is require !!!";
     if (password.length < 8 || password.length > 16) return "Password must be between 8 and 16 characters !!!";

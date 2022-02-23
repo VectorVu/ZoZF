@@ -3,7 +3,7 @@ import ButtonComponent from "../../component/button.js";
 import { getCurrentUser } from "../firebase/auth.js";
 import { checkName, checkVNPhoneNumber } from "../../common/validdate.js"
 import { createUser, getUserByEmail, updateUserData } from "../firebase/store.js";
-import MainScreen from"../main/main.js";
+import MainScreen from "../main/main.js";
 import app from "../../index.js";
 import * as _noti from "../../common/notify.js";
 
@@ -115,29 +115,29 @@ class inforScreen {
                 this.$name.setError(checkName(name.value));
             }
             else this.$name.setError("");
-    
+
             // vì validate số điện thoại phụ thuộc quốc gia, nhà mạng... nên ở đây em chỉ valid số điện thoại của Việt Nam
-    
+
             if (checkVNPhoneNumber(phone.value) !== null) {
                 isError = true;
                 this.$phone.setError(checkVNPhoneNumber(phone.value));
             }
             else this.$phone.setError("");
-            
+
             // xử lý exit user
-            if(!isError){
-                if(this.$userID){
+            if (!isError) {
+                if (this.$userID) {
                     //setloading
-                    await updateUserData(this.$userID, email.value, name.value, phone.value, imageUrl.value, [], []);
+                    await updateUserData(this.$userID, email.value, name.value, phone.value, imageUrl.value);
                 } else {
-                    await createUser(user.email, name.value, phone.value, imageUrl.value, [], []);
+                    await createUser(user.email, name.value, phone.value, imageUrl.value, [], [], []);
                 }
                 const mainScreen = new MainScreen();
                 app.changeActiveScreen(mainScreen);
-            } 
+            }
         } catch (error) {
-        _noti.error(error.errorCode, error.errorMessage);
-        }      
+            _noti.error(error.errorCode, error.errorMessage);
+        }
     }
 
     render(appEle) {

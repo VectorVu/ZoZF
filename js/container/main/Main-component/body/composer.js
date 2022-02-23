@@ -1,6 +1,6 @@
 import ButtonComponent from "../../../../component/button.js"
 import * as _noti from "../../../../common/notify.js";
-import { sendComment,addCommentToPost } from "../../../firebase/store.js"
+import { sendComment } from "../../../firebase/store.js"
 
 
 class Composer{
